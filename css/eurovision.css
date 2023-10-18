@@ -1,0 +1,165 @@
+body {
+    background: linear-gradient(45deg,rgb(76, 77, 73), rgb(39, 39, 39)) fixed;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    height: 98%;
+    width: 100%;
+}
+
+
+.row-chairs {
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+}
+
+.mid-row {
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.row-block {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.space {
+    width: 15%;
+}
+
+
+.mid-block {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mid-table {
+    height: 85%;
+    width: 60%;
+    background: radial-gradient(#572863, #5e002f);
+    border-radius: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-style: outset;
+}
+
+
+.chair {
+    height: 100%;
+    width: 11rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.flagContainer {
+    height: 60%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flag {
+    height: 90%;
+    width: 80%;
+}
+
+
+.nameContainer {
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.name {
+    font-family: "Helvetica, Arial";
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+
+.rateContainer {
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: top;
+}
+
+.rating {
+    position: relative;
+    width: 10em;
+    height: 80%;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 0 2px #dad434;
+}
+
+.rating__star {
+    font-size: 18px;
+    cursor: pointer;
+    color: #dad434;
+    transition: filter linear .3s;
+    width: 18%;
+}
+
+
+.main-text-container {
+    width: 90%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.subtext-container {
+    width: 90%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.main-text {
+    font-family: "Georgia";
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
+
+.subtext {
+    font-family: "Georgia";
+    font-size: 16px;
+    color: white;
+    position: relative;
+    top: -0.5rem;
+}
