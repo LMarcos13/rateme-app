@@ -1,41 +1,48 @@
+html {
+    margin: 0;
+    height: 100%;
+}
+
 body {
+    height: 100%;
+    width: 100%;
+}    
+
+.window-background {
     background: linear-gradient(45deg,rgb(76, 77, 73), rgb(39, 39, 39)) fixed;
-    height: 100vh;
-    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}   
+
+.window {
+    aspect-ratio:  6 / 4;
+    height: 100%;
+}
+
+.container {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.table-container {
-    display: flex;
+.main {
+    height: 95%;
+    width: 95%;
     flex-direction: column;
-    height: 98%;
+}
+
+.row {
+    flex-direction: row;
+    height: 33%;
     width: 100%;
 }
 
-
-.row-chairs {
-    height: 33%;
-    display: flex;
-    flex-direction: row;
-}
-
-.mid-row {
-    height: 33%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-
-.row-block {
+.column {
+    flex-direction: column;
     width: 35%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .space {
@@ -43,18 +50,27 @@ body {
 }
 
 
-.mid-block {
-    width: 20%;
+.block {
+    width: 25%;
     height: 100%;
     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.chair {
+    width: 90%;
+    height: 100%;
     flex-direction: column;
+    display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .mid-table {
     height: 85%;
-    width: 60%;
+    width: 50%;
     background: radial-gradient(#572863, #5e002f);
     border-radius: 40px;
     display: flex;
@@ -64,50 +80,27 @@ body {
     border-style: outset;
 }
 
-
-.chair {
-    height: 100%;
-    width: 11rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-
-.flagContainer {
+.avatar {
     height: 60%;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-.flag {
+.small {
+    height: 20%;
+}
+
+
+img {
     height: 90%;
     width: 80%;
 }
 
-
-.nameContainer {
-    height: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 .name {
     font-family: "Helvetica, Arial";
     font-size: 20px;
     font-weight: bold;
     color: white;
-}
-
-
-.rateContainer {
-    height: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: top;
 }
 
 .rating {

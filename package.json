@@ -1,0 +1,26 @@
+{
+  "name": "rateme-app",
+  "productName": "RateMe",
+  "version": "1.0.0",
+  "description": "App to perform the RateMe exclusion experiment ",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LMarcos13/rateme-app.git"
+  },
+  "author": "Luis Marcos Vidal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LMarcos13/rateme-app/issues"
+  },
+  "homepage": "https://github.com/LMarcos13/rateme-app#readme",
+  "devDependencies": {
+    "electron": "^27.0.0"
+  },
+  "dependencies": {
+    "toastify-js": "^1.12.0"
+  }
+}
