@@ -2,64 +2,35 @@ const ratingStars =  document.getElementsByClassName('rateContainer');
 const starClassActive = "rating__star fas fa-star";
 const starClassUnactive = "rating__star far fa-star";
 
-const playersRates = {};
-const countries = ["Belgium","France","Netherlands","Italy","Spain","Germany"];
+const subtext = document.getElementsByClassName("subtext");	
 
-for(var i = 0; i < 6; i++) {
-    
-    let rates = [];
-    for(var j = 0; j < ratingStars.length; j++) {
-        
-        if(i!==j) {
-                if(countries[j]!=="Spain") {
-                    rates[j] = Math.round(2 * Math.random() + 2);
-                } else {
-                    rates[j] = Math.round(2 * Math.random() - 1);
-                }
-            } else {
-                rates[j] = -2;
-            }
-        }	
-        playersRates[countries[i]] = rates;
-    
-}
+const nameFields = document.getElementsByClassName('name');
+const avatarFields = document.getElementsByClassName("avatarField");
 
-const subtext = document.getElementsByClassName("subtext")[0];	
-const flags = document.getElementsByClassName("flag");
-
-for(var i = 0; i < flags.length; i++) {
-    flags[i].addEventListener("click", clickStyle)
-    flags[i].addEventListener("mouseout",mouseoutStyle)
-    flags[i].addEventListener("mouseover",mouseoverStyle)
-    }	
-
-
-function mouseoverStyle(e) {
-    if (!e.target.clicked) {
-        e.target.style.cursor = "pointer";
-        e.target.style.transform = "scale(1.05)";
-    }  
-}
-
-function mouseoutStyle(e) {
-    if (!e.target.clicked) {
-        e.target.style.cursor = "default";
-        e.target.style.transform = "scale(0.95)";
+window.onload = function() {
+    for (let i = 0; i < nameFields.length; i++) {
+        nameFields[i].innerHTML = window.parent.botNames[i];
+        avatarFields[i].src = '../images/'+window.parent.botAvatars[i];
+        if (window.parent.blockDesign.direction==='clockWise') {
+            var index = 4 - i;
+        } else {
+            var index = i;
+        }
+        if (i < 5) {
+            let initTime = 1000 * index * window.parent.blockDesign.trialDuration;
+        setTimeout(showResults, initTime.toString(), avatarFields[i], nameFields[i]);
+        }
     }
 }
 
-function clickStyle(e) {
-    evaluateButtons();
-    e.target.style.transform = "scale(1.05)";
-    e.target.style.cursor = "default";
-    e.target.style.boxShadow = "0px 0px 7px 7px #a9a9a9";
-    e.target.clicked = true;
-    let chair = e.target.parentElement.parentElement;
-    let nameCountry =  chair.querySelector('.flag');
-    nameCountry = nameCountry.alt;
+
+function showResults(botAvatar,botName) {
+    resetButtons();
+    botAvatar.style.transform = "scale(1.05)";
+    botAvatar.style.boxShadow = "0px 0px 7px 7px #a9a9a9";
     
-    let ratingPlayer =  playersRates[nameCountry]
-    
+    let ratingPlayer = window.parent.blockDesign.ratings[botName.innerHTML];
+
     for(var j = 0; j < ratingPlayer.length; j++) {
         resetStars(ratingStars[j]);
         if(ratingPlayer[j]>-1) {
@@ -69,24 +40,14 @@ function clickStyle(e) {
         }
     }
     
-    changeSubtext(chair);
+    subtext[0].innerHTML = "Estás viendo las puntuaciones de <b>" + botName.innerHTML + "</b>";
 }
 
-function evaluateButtons() {
-    var elements = document.getElementsByClassName("flag");
-    var clicked = false;
-    for (var i = 0; i < elements.length; i++) {
-        if (elements[i].clicked) {
-            elements[i].style.transform = "scale(0.95)";
-            elements[i].style.boxShadow= "0 5px #2c2c2c";
-            elements[i].clicked = false;
-        }
+function resetButtons() {
+    for (var i = 0; i < avatarFields.length; i++) {
+        avatarFields[i].style.transform = "scale(1)";
+        avatarFields[i].style.boxShadow= "0 5px #2c2c2c";
     }
-}
-
-function changeSubtext(chair) {
-    let namePlayer =  chair.querySelector('.name');
-    subtext.innerHTML = "Estás viendo las puntuaciones de "+namePlayer.innerHTML;
 }
 
 function changeStars(starBox,rate) {
