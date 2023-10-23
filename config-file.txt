@@ -1,0 +1,9 @@
+{
+  "numTrial":6,
+  "trialDuration":5,
+  "numBlock":6,
+  "restDuration":10,
+  "playerName":"Player",
+  "botNames":["Emma","Marie","Joost","Elisabetta","Greta"],
+  "images":["belgium.png","france.png","netherlands.png","italy.png","germany.png","spain.png"]
+}

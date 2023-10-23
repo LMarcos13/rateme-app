@@ -8,7 +8,12 @@ function createMainWindow() {
     const mainWindow = new BrowserWindow({
         title: 'RateMe',
         width: isDev ? 2800 : 1400,
-        height: 900
+        height: 900,
+        webPreferences: {
+            contextIsolation: true,
+            nodeIntegration: true,
+            preload: path.join(__dirname, 'preload.js')
+        }
     });
 
     // Open dev tools if in dev environment

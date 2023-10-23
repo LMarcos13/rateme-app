@@ -1,23 +1,30 @@
-const numBlock = 6;
-const trialDuration = 5;
-const numTrial = 5;
-const playerName = 'Player';
-const scores = {'Emma':2,'Marie':3,'Joost':2,'Elisabetta':3,'Greta':2};
+let filePath = 'config-file.txt';
+let data = fs.readFileSync(filePath, { encoding: 'utf8', flag: 'r' });
+const config = JSON.parse(data);
+
+const blockDuration = config.trialDuration * config.numTrial;
 const windowContent = document.getElementsByClassName('window');
 
-window.botNames = ['Emma','Marie','Joost','Elisabetta','Greta'];
-botNames.push(playerName);
-window.botAvatars = ['belgium.png','france.png','netherlands.png','italy.png','germany.png','spain.png'];
+window.botNames = config.botNames;
+botNames.push(config.playerName);
+window.botAvatars = config.images;
 window.blockDesign = Object();
-const group = randomizeGroup(numBlock);
-const direction = randomizeDirection(numBlock);
+const group = randomizeGroup(config.numBlock);
+const direction = randomizeDirection(config.numBlock);
 
 
 window.onload = function() {
-    for (let i = 0; i < numBlock; i++) {
-        let initTime = 1000 * numTrial * trialDuration * i;
+    for (let i = 0; i < config.numBlock; i++) {
+        let restInitTime = 1000 * i * (config.restDuration + blockDuration);
+        setTimeout(restingBlock, restInitTime.toString());
+        let initTime = 1000 * (blockDuration * i + config.restDuration * (i + 1));
         setTimeout(experimentalBlock, initTime.toString(), i);
     }
+}
+
+
+function restingBlock() {
+    windowContent[0].src = '';
 }
 
 
@@ -25,7 +32,7 @@ function experimentalBlock(index) {
     blockDesign.group = group[index];
     blockDesign.direction = direction[index];
     blockDesign.ratings = generateRatings(group[index]);
-    blockDesign.trialDuration = trialDuration;
+    blockDesign.trialDuration = config.trialDuration;
     windowContent[0].src = 'ratingTable.html';
 }
 
@@ -66,17 +73,15 @@ function generateRatings(blockGroup) {
     for(var i = 0; i < 6; i++) {
 
         let rates = [];
-        for(var j = 0; j < botNames.length; j++) {
+        for(var j = 0; j < (botNames.length-1); j++) {
 
             if(i!==j) {
-                if(botNames[i]!==playerName) {
-                    if(botNames[j]===playerName && blockGroup==="exclusion") {
+                if(botNames[i]!==config.playerName) {
+                    if(botNames[j]===config.playerName && blockGroup==="exclusion") {
                         rates[j] = Math.round(Math.random());
                     } else {
                         rates[j] = Math.round(2 * Math.random() + 2);
                     }
-                } else {
-                    rates[j] = scores[botNames[j]];
                 }
             } else {
                 rates[j] = -2;
