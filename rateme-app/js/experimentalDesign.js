@@ -11,9 +11,15 @@ window.botAvatars = config.images;
 window.blockDesign = Object();
 const group = randomizeGroup(config.numBlock);
 const direction = randomizeDirection(config.numBlock);
+const questions = randomizeQuestions();
+
+window.onload = function () {
+    var theButton = window.frames['contentWindow'].contentDocument.getElementsByClassName('theButton');
+    theButton[0].onclick = initializeExperiment;
+}
 
 
-window.onload = function() {
+function initializeExperiment() {
     for (let i = 0; i < config.numBlock; i++) {
         let restInitTime = 1000 * i * (config.restDuration + blockDuration);
         setTimeout(restingBlock, restInitTime.toString());
@@ -33,13 +39,14 @@ function experimentalBlock(index) {
     blockDesign.direction = direction[index];
     blockDesign.ratings = generateRatings(group[index]);
     blockDesign.trialDuration = config.trialDuration;
+    blockDesign.question = questions[index];
     windowContent[0].src = 'ratingTable.html';
 }
 
 
 function randomizeGroup(nBlock) {
     var group = Array(nBlock / 2).fill('inclusion');
-    group.concat(Array(nBlock / 2).fill('exclusion'));
+    group = group.concat(Array(nBlock / 2).fill('exclusion'));
 
     let currentIndex = group.length,  randomIndex;
     while (currentIndex > 0) {
@@ -67,13 +74,28 @@ function randomizeDirection(nBlock){
 }
 
 
+function randomizeQuestions() {
+
+    var questions = config.blockQuestions;
+
+    let currentIndex = questions.length,  randomIndex;
+    while (currentIndex > 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [questions[currentIndex], questions[randomIndex]] = [questions[randomIndex], questions[currentIndex]];
+    }
+    
+    return questions
+}
+
+
 function generateRatings(blockGroup) {
 
     var playersRates = {};
-    for(var i = 0; i < 6; i++) {
+    for(var i = 0; i < 5; i++) {
 
         let rates = [];
-        for(var j = 0; j < (botNames.length-1); j++) {
+        for(var j = 0; j < botNames.length; j++) {
 
             if(i!==j) {
                 if(botNames[i]!==config.playerName) {

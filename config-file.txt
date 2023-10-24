@@ -5,5 +5,11 @@
   "restDuration":10,
   "playerName":"Player",
   "botNames":["Emma","Marie","Joost","Elisabetta","Greta"],
-  "images":["belgium.png","france.png","netherlands.png","italy.png","germany.png","spain.png"]
+  "images":["belgium.png","france.png","netherlands.png","italy.png","germany.png","spain.png"],
+  "blockQuestions":["¿Te gustaría visitar este país?",
+	"¿Te gustaría vivir una temporada ene ste país?",
+	"¿Crees que la gente de este país es eficiente?",
+	"¿Crees que la gente de este país es interesante?",
+	"¿Crees que la gente de este país tiene un buen sentido del humor?",
+	"¿Crees que la gente de este país es amable?"]
 }

@@ -100,7 +100,7 @@ img {
 
 
 .name {
-    font-family: "PT Sans";
+    font-family: "PT Sans; Founders_Grotesk";
     font-size: 2.5vw;
     font-weight: bold;
 }
@@ -145,9 +145,10 @@ img {
 
 
 .main-text {
-    font-family: "Space Grotesk";
+    font-family: "Founders_Grotesk";
     font-size: 2.3vw;
     font-weight: bold;
+    margin: auto;
 }
 
 .subtext {
@@ -165,4 +166,77 @@ img {
 
 .instructions {
     font-size: 2.5vw;
+}
+
+
+@font-face {
+    font-family: Founders_Grotesk;
+    src: url("../fonts/Founders/Founders_Grotesk-Regular.otf");
+}
+
+@font-face {
+    font-family: Founders_Grotesk;
+    src: url("../fonts/Founders/Founders_Grotesk-Bold.otf");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: Merriweather;
+    src: url("../fonts/Merriweather/Merriweather-Regular.ttf");
+}
+
+@font-face {
+    font-family: Merriweather;
+    src: url("../fonts/Merriweather/Merriweather-Black.ttf");
+    font-weight: bold;
+}
+
+
+.theButton {
+    height: 50%;
+    width: 50%;
+    background: radial-gradient(#572863, #5e002f);
+    border-radius: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-style: outset;
+    color: white;
+}
+
+.main-text-button {
+    font-family: "Founders_Grotesk";
+    font-weight: bold;
+    margin: auto;
+    font-size: 4vw;
+}
+
+.subtext-button {
+    font-family: "Merriweather";
+    font-size: 2.5vw;
+    position: relative;
+    top: -0.5rem;
+}
+
+
+.questionAnswer {
+    background: radial-gradient(#572863, #5e002f);
+    height: 70%;
+    width: 70%;
+    border-radius: 15%;
+    border-style: outset;
+    color: white;
+}
+
+.text-button-question {
+    font-family: "Founders_Grotesk";
+    font-size: 7vw;
+    font-weight: bold;
+    position: relative;
+    top: 0.2em;
+}
+
+.half-width {
+    width: 50%;
 }

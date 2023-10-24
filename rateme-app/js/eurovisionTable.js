@@ -2,12 +2,14 @@ const ratingStars =  document.getElementsByClassName('rateContainer');
 const starClassActive = "rating__star fas fa-star";
 const starClassUnactive = "rating__star far fa-star";
 
-const subtext = document.getElementsByClassName("subtext");	
+const subtext = document.getElementsByClassName("subtext");
+const mainText = document.getElementsByClassName("main-text");
 
 const nameFields = document.getElementsByClassName('name');
 const avatarFields = document.getElementsByClassName("avatarField");
 
 window.onload = function() {
+    mainText[0].innerHTML = window.parent.blockDesign.question;
     for (let i = 0; i < nameFields.length; i++) {
         nameFields[i].innerHTML = window.parent.botNames[i];
         avatarFields[i].src = '../images/'+window.parent.botAvatars[i];
