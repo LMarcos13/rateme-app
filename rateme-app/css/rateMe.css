@@ -70,6 +70,15 @@ body {
     justify-content: center;
 }
 
+.mid-space {
+    height: 85%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .mid-table {
     height: 85%;
     width: 50%;
@@ -205,14 +214,14 @@ img {
     color: white;
 }
 
-.main-text-button {
+.main-text-big {
     font-family: "Founders_Grotesk";
     font-weight: bold;
     margin: auto;
     font-size: 4vw;
 }
 
-.subtext-button {
+.subtext-big {
     font-family: "Merriweather";
     font-size: 2.5vw;
     position: relative;
@@ -239,4 +248,12 @@ img {
 
 .half-width {
     width: 50%;
+}
+
+
+@keyframes glow {
+    25%  {transform: scale(1.3)}
+    50%  {transform: scale(1.2)}
+    75%  {transform: scale(1.3)}
+    100% {transform: scale(1.2)}
 }

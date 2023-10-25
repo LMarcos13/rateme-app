@@ -2,14 +2,13 @@ const ratingStars =  document.getElementsByClassName('rateContainer');
 const starClassActive = "rating__star fas fa-star";
 const starClassUnactive = "rating__star far fa-star";
 
-const subtext = document.getElementsByClassName("subtext");
+//const subtext = document.getElementsByClassName("subtext-big");
 const mainText = document.getElementsByClassName("main-text");
 
 const nameFields = document.getElementsByClassName('name');
 const avatarFields = document.getElementsByClassName("avatarField");
 
 window.onload = function() {
-    mainText[0].innerHTML = window.parent.blockDesign.question;
     for (let i = 0; i < nameFields.length; i++) {
         nameFields[i].innerHTML = window.parent.botNames[i];
         avatarFields[i].src = '../images/'+window.parent.botAvatars[i];
@@ -20,16 +19,22 @@ window.onload = function() {
         }
         if (i < 5) {
             let initTime = 1000 * index * window.parent.blockDesign.trialDuration;
-        setTimeout(showResults, initTime.toString(), avatarFields[i], nameFields[i]);
+            setTimeout(trialInit, initTime.toString(), avatarFields[i], nameFields[i]);
         }
     }
 }
 
 
-function showResults(botAvatar,botName) {
+function trialInit(botAvatar,botName) {
     resetButtons();
-    botAvatar.style.transform = "scale(1.05)";
-    botAvatar.style.boxShadow = "0px 0px 7px 7px #a9a9a9";
+    initialBlink(botAvatar);
+    setTimeout(showResults, 1000, botAvatar, botName);
+}
+
+
+function showResults(botAvatar,botName) {
+    //botAvatar.style.transform = "scale(1.2)";
+    //botAvatar.style.boxShadow = "0px 0px 7px 7px #a9a9a9";
     
     let ratingPlayer = window.parent.blockDesign.ratings[botName.innerHTML];
 
@@ -42,13 +47,14 @@ function showResults(botAvatar,botName) {
         }
     }
     
-    subtext[0].innerHTML = "Estás viendo las puntuaciones de <b>" + botName.innerHTML + "</b>";
+    //subtext[0].innerHTML = "Estás viendo las puntuaciones de <b>" + botName.innerHTML + "</b>";
 }
 
 function resetButtons() {
     for (var i = 0; i < avatarFields.length; i++) {
         avatarFields[i].style.transform = "scale(1)";
-        avatarFields[i].style.boxShadow= "0 5px #2c2c2c";
+        avatarFields[i].style.boxShadow = "0 5px #2c2c2c";
+        avatarFields[i].style.animation = '';
     }
 }
 
@@ -73,4 +79,17 @@ function resetStars(starBox) {
     let stars = starBox.querySelectorAll(".rating__star");
     let starsLength = stars.length;
     for (i = 0; i < starsLength; ++i) stars[i].className = starClassUnactive;
+}
+
+function initialBlink(botAvatar) {
+
+    for (let i=0; i<ratingStars.length;i++) {
+        ratingStars[i].style.visibility = "hidden";
+    //    nameFields[i].style.visibility = 'hidden';
+    }
+
+    botAvatar.style.boxShadow = "0px 0px 7px 7px #a9a9a9";
+    botAvatar.style.animationName = 'glow';
+    botAvatar.style.animationDuration =  '1s';
+    botAvatar.style.transform = "scale(1.2)";
 }
