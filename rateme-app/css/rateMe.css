@@ -225,17 +225,14 @@ img {
     font-family: "Merriweather";
     font-size: 2.5vw;
     position: relative;
-    top: -0.5rem;
+    top: -1rem;
 }
 
 
-.questionAnswer {
-    background: radial-gradient(#572863, #5e002f);
+.emoji-container {
     height: 70%;
-    width: 70%;
-    border-radius: 15%;
-    border-style: outset;
-    color: white;
+    width: 80%;
+    border-radius: 50%;
 }
 
 .text-button-question {
@@ -256,4 +253,22 @@ img {
     50%  {transform: scale(1.2)}
     75%  {transform: scale(1.3)}
     100% {transform: scale(1.2)}
+}
+
+
+.row-question {
+    flex-direction: row;
+    height: 50%;
+    width: 100%;
+}
+
+.buttonBlock {
+    height: 70%;
+    width: 20%;
+}
+
+
+.emoji {
+    height: 100%;
+    width: 100%;
 }

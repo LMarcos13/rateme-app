@@ -6,52 +6,46 @@
     <title>Question Screen</title>
     <meta http-equiv="Content-Security-Policy" content="script-src https://kit.fontawesome.com/d2e8872063.js 'self'">
     <link rel="stylesheet" href="../css/rateMe.css">
-    <script src="../js/finalQuestion.js"></script>
+    <script src="../js/moodQuestion.js"></script>
 </head>
 
 <body class="container main">
     <div class="container main">
-        <div class="container row">
-            <div class="container half-width">
-                <p class="subtext">Por favor, indica cómo te sientes del </p>
+        <div class="container row-question">
+            <div class="container">
+                <p class="subtext-big">Por favor, selecciona la imagen que mejor representa tu estado de ánimo en este momento. 
+                    Utiliza el botón de tu dedo índice derecho para desplazarte por las imágenes.</p>
             </div>
         </div>
 
-        <div class="container row">
-            <div class="block container">
-                <div class="container questionAnswer">
-                    <p class="text-button-question">3</p>
+        <div class="container row-question">
+            <div class="container buttonBlock">
+                <div class="container emoji-container veryBad-button">
+                    <img src="../images/emojis/veryBad.png" class="emoji">
                 </div>
             </div>
-            <div class="block container">
-                <div class="container questionAnswer">
-                    <p class="text-button-question">2</p>
+            <div class="container buttonBlock">
+                <div class="container emoji-container bad-button">
+                    <img src="../images/emojis/bad.png" class="emoji">
                 </div>
             </div>
-            <div class="block container">
-                <div class="container questionAnswer">
-                    <p class="text-button-question">1</p>
+            <div class="container buttonBlock">
+                <div class="container emoji-container neutral-button">
+                    <img src="../images/emojis/neutral.png" class="emoji">
+                </div>
+            </div>
+            <div class="container buttonBlock">
+                <div class="container emoji-container good-button">
+                    <img src="../images/emojis/good.png" class="emoji">
+                </div>
+            </div>
+            <div class="container buttonBlock">
+                <div class="container emoji-container veryGood-button">
+                    <img src="../images/emojis/veryGood.png" class="emoji">
                 </div>
             </div>
         </div>
 
-        <div class="container row">
-            <div class="block container">
-                <div class="container questionAnswer">
-                    <p class="text-button-question">6</p>
-                </div>
-            </div>
-            <div class="block container">
-                <div class="container questionAnswer">
-                    <p class="text-button-question">5</p>
-                </div>
-            </div>
-            <div class="block container">
-                <div class="container questionAnswer">
-                    <p class="text-button-question">4</p>
-                </div>
-            </div>
-        </div>
     </div>
 </body>
 

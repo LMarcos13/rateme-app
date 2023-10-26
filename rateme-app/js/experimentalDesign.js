@@ -2,7 +2,7 @@ let filePath = 'config-file.txt';
 let data = fs.readFileSync(filePath, { encoding: 'utf8', flag: 'r' });
 const config = JSON.parse(data);
 
-const blockDuration = config.trialDuration * config.numTrial;
+const blockDuration = config.trialDuration * config.numTrial + 2;
 const windowContent = document.getElementsByClassName('window');
 const container = document.getElementsByClassName('container');
 
@@ -15,7 +15,6 @@ const blocks = Array(2);
 for (let i = 0; i < config.botNames.length; i++) {
     blocks[i] = randomizeBlocks(config.blockQuestions.length,config.botNames[i]);
 }
-
 
 window.blockTime = Array(numBlock);
 window.restTime = Array(numBlock);
@@ -32,20 +31,43 @@ window.onload = function () {
 
 function initializeExperiment() {
     for (let i = 0; i < numBlock; i++) {
-        window.initTime = Date.now() / 1000;
-        let restInitTime = 1000 * i * (config.restDuration + blockDuration);
+        window.initTime = Date.now();
+        if (i===0) {
+            var restInitTime = 100;
+        } else {
+            var restInitTime = blockInitTime  + 1000 * (blockDuration);
+        }
+        
         setTimeout(restingBlock, restInitTime.toString(), i);
-        let initTime = 1000 * (blockDuration * i + config.restDuration * (i + 1));
-        setTimeout(experimentalBlock, initTime.toString(), i);
+        
+        var blockInitTime = 1000 * config.restDuration + restInitTime;
+        if (i===0 | i===6) {
+            let initInstructionCircle = blockInitTime;
+            blockInitTime = blockInitTime + 1000 * config.presentationDuration;
+            setTimeout(instructionCircle, initInstructionCircle.toString(), i);
+        }
+        
+        setTimeout(experimentalBlock, blockInitTime.toString(), i);
     }
 }
 
 
 function restingBlock(index) {
-    windowContent[0].src = '';
+    windowContent[0].src = 'finalQuestionScreen.html';
     let restTime = Date.now() / 1000;
-    window.restTime[index] = restTime - window.initTime;
-    console.log(window.restTime[index]);
+    window.restTime[index] = 1000 * restTime - window.initTime;
+    console.log(window.restTime[index] / 1000);
+}
+
+
+function instructionCircle(index) {
+    if (index<6) {
+        window.botNames = blocks[0].botNames;
+    } else {
+        window.botNames = blocks[1].botNames;
+    }
+    window.botNames.push(config.playerName);
+    windowContent[0].src = 'instructionCircleScreen.html';
 }
 
 
@@ -55,9 +77,8 @@ function experimentalBlock(index) {
         var currentBlock = blocks[0];
     } else {
         var currentBlock = blocks[1];
+        index = index - 6;
     }
-    window.botNames = currentBlock.botNames;
-    window.botNames.push(config.playerName);
 
     blockDesign.group = currentBlock.group[index];
     blockDesign.direction = currentBlock.direction[index];
@@ -65,16 +86,15 @@ function experimentalBlock(index) {
     blockDesign.trialDuration = config.trialDuration;
     blockDesign.question = currentBlock.questions[index];
     let blockTime = Date.now() / 1000;
-    window.blockTime[index] = blockTime - window.initTime;
-    console.log(window.blockTime[index]);
+    window.blockTime[index] = 1000 * blockTime - window.initTime;
+    console.log(window.blockTime[index] / 1000);
 
-    //windowContent[0].src = 'instructionQuestionScreen.html';
-    windowContent[0].src = 'instructionCircleScreen.html';
+    windowContent[0].src = 'instructionQuestionScreen.html';
 
     setTimeout(() => {
         windowContent[0].src = 'ratingCircleScreen.html';
     }, 
-    3000);
+    config.questionDuration * 1000);
 }
 
 
