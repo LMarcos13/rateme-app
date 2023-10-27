@@ -2,11 +2,12 @@ let filePath = 'config-file.txt';
 let data = fs.readFileSync(filePath, { encoding: 'utf8', flag: 'r' });
 const config = JSON.parse(data);
 
-const blockDuration = config.trialDuration * config.numTrial + 2;
+const blockDuration = config.trialDuration * config.numTrial;
+const extendedBlockDuration = blockDuration + config.questionDuration + config.moodQuestionDuration;
 const windowContent = document.getElementsByClassName('window');
 const container = document.getElementsByClassName('container');
 
-const numBlock = 2*config.blockQuestions.length;
+const numBlock = 2 * config.blockQuestions.length;
 window.botAvatars = config.images;
 window.blockDesign = Object();
 
@@ -16,8 +17,11 @@ for (let i = 0; i < config.botNames.length; i++) {
     blocks[i] = randomizeBlocks(config.blockQuestions.length,config.botNames[i]);
 }
 
-window.blockTime = Array(numBlock);
-window.restTime = Array(numBlock);
+window.blockOnset = Array(numBlock);
+window.restOnset = Array(numBlock);
+window.moodOnset = Array(numBlock);
+window.moodValue = Array();
+window.currentMood = Number;
 
 bodyStyle = document.getElementsByTagName('body');
 
@@ -35,7 +39,8 @@ function initializeExperiment() {
         if (i===0) {
             var restInitTime = 100;
         } else {
-            var restInitTime = blockInitTime  + 1000 * (blockDuration);
+            window.moodValue.push(window.currentMood);
+            var restInitTime = blockInitTime  + 1000 * extendedBlockDuration;
         }
         
         setTimeout(restingBlock, restInitTime.toString(), i);
@@ -52,14 +57,6 @@ function initializeExperiment() {
 }
 
 
-function restingBlock(index) {
-    windowContent[0].src = 'finalQuestionScreen.html';
-    let restTime = Date.now() / 1000;
-    window.restTime[index] = 1000 * restTime - window.initTime;
-    console.log(window.restTime[index] / 1000);
-}
-
-
 function instructionCircle(index) {
     if (index<6) {
         window.botNames = blocks[0].botNames;
@@ -68,6 +65,16 @@ function instructionCircle(index) {
     }
     window.botNames.push(config.playerName);
     windowContent[0].src = 'instructionCircleScreen.html';
+}
+
+
+function restingBlock(index) {
+
+    windowContent[0].src = 'restingScreen.html';
+    let restTime = Date.now() / 1000;
+    window.restOnset[index] = 1000 * restTime - window.initTime;
+    console.log(window.restOnset[index] / 1000);
+
 }
 
 
@@ -86,8 +93,8 @@ function experimentalBlock(index) {
     blockDesign.trialDuration = config.trialDuration;
     blockDesign.question = currentBlock.questions[index];
     let blockTime = Date.now() / 1000;
-    window.blockTime[index] = 1000 * blockTime - window.initTime;
-    console.log(window.blockTime[index] / 1000);
+    window.blockOnset[index] = 1000 * blockTime - window.initTime;
+    console.log(window.blockOnset[index] / 1000);
 
     windowContent[0].src = 'instructionQuestionScreen.html';
 
@@ -95,6 +102,22 @@ function experimentalBlock(index) {
         windowContent[0].src = 'ratingCircleScreen.html';
     }, 
     config.questionDuration * 1000);
+
+    setTimeout(() => {
+        let onsetTime = Date.now();
+        window.moodOnset[index] = (onsetTime - window.initTime);
+        windowContent[0].src = 'moodQuestionScreen.html';
+
+        if (index===0) {
+            setTimeout(() => {
+                writeDesign();
+            },
+            config.moodQuestionDuration);
+        }
+
+    }, 
+    (config.questionDuration + blockDuration) * 1000);
+
 }
 
 
@@ -150,4 +173,17 @@ function generateRatings(blockGroup) {
     }
 
     return playersRates
+}
+
+
+function writeDesign() {
+    let outData = Object();
+
+    window.moodValue.push(window.currentMood);
+    outData.moodValue = window.moodValue;
+    outData.blockOnset = window.blockOnset;
+    outData.restOnset = window.restOnset;
+    outData.moodOnset = window.moodOnset;
+
+    fs.writeFileSync('outData.json', JSON.stringify(outData, null, 2), 'utf8');
 }

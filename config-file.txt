@@ -1,9 +1,10 @@
 {
-  "numTrial":6,
-  "trialDuration":2,
-  "restDuration":300,
+  "numTrial":5,
+  "trialDuration":3,
+  "restDuration":5,
   "questionDuration":3,
   "presentationDuration":3,
+  "moodQuestionDuration":10,
   "playerName":"Player",
   "botNames":[["Emma","Marie","Joost","Elisabetta","Greta"],["Lina","Antoine","Niels","Cosima","Ada"]],
   "images":["belgium.png","france.png","netherlands.png","italy.png","germany.png","spain.png"],

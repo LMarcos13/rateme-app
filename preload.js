@@ -13,4 +13,5 @@ contextBridge.exposeInMainWorld('path', {
 
 contextBridge.exposeInMainWorld('fs', {
     readFileSync: (...args) => fs.readFileSync(...args),
+    writeFileSync: (...args) => fs.writeFileSync(...args),
 });

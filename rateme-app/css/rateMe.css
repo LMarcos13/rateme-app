@@ -224,8 +224,12 @@ img {
 .subtext-big {
     font-family: "Merriweather";
     font-size: 2.5vw;
+    line-height: 2;
+}
+
+.buttontext {
     position: relative;
-    top: -1rem;
+    top: -1.5rem;
 }
 
 
@@ -271,4 +275,10 @@ img {
 .emoji {
     height: 100%;
     width: 100%;
+}
+
+
+.cross {
+    width: 5%;
+    aspect-ratio: 1 / 1;
 }

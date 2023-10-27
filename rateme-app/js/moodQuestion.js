@@ -28,5 +28,6 @@ function changeAnswer(e) {
 
         emojis[selectedAnswer].style.boxShadow = emojisShadow[selectedAnswer];
         emojis[selectedAnswer].style.transform = "scale(1.2)";
+        window.parent.currentMood = selectedAnswer;
     }
 }
