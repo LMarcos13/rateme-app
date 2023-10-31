@@ -2,6 +2,8 @@ let filePath = 'config-file.txt';
 let data = fs.readFileSync(filePath, { encoding: 'utf8', flag: 'r' });
 const config = JSON.parse(data);
 
+window.sesionData = 'CACA';
+
 const blockDuration = config.trialDuration * config.numTrial;
 const extendedBlockDuration = blockDuration + config.questionDuration + config.moodQuestionDuration;
 const windowContent = document.getElementsByClassName('window');
@@ -27,33 +29,45 @@ bodyStyle = document.getElementsByTagName('body');
 
 
 window.onload = function () {
-    var theButton = window.frames['contentWindow'].contentDocument.getElementsByClassName('theButton');
+    var theButton = window.frames['contentWindow'].contentDocument.getElementsByClassName('button-big');
     theButton[0].onclick = initializeExperiment;
     windowContent[0].style.cursor = 'none';
 }
 
 
 function initializeExperiment() {
-    for (let i = 0; i < numBlock; i++) {
-        window.initTime = Date.now();
-        if (i===0) {
-            var restInitTime = 100;
-        } else {
-            window.moodValue.push(window.currentMood);
-            var restInitTime = blockInitTime  + 1000 * extendedBlockDuration;
+
+    let sessionData = readSessionData();
+
+    if (checkSessionData(sessionData)) {
+
+        for (let i = 0; i < numBlock; i++) {
+            window.initTime = Date.now();
+            if (i===0) {
+                var restInitTime = 100;
+            } else {
+                window.moodValue.push(window.currentMood);
+                var restInitTime = blockInitTime  + 1000 * extendedBlockDuration;
+            }
+            
+            setTimeout(restingBlock, restInitTime.toString(), i);
+            
+            var blockInitTime = 1000 * config.restDuration + restInitTime;
+            if (i===0 | i===6) {
+                let initInstructionCircle = blockInitTime;
+                blockInitTime = blockInitTime + 1000 * config.presentationDuration;
+                setTimeout(instructionCircle, initInstructionCircle.toString(), i);
+            }
+            
+            setTimeout(experimentalBlock, blockInitTime.toString(), i);
         }
-        
-        setTimeout(restingBlock, restInitTime.toString(), i);
-        
-        var blockInitTime = 1000 * config.restDuration + restInitTime;
-        if (i===0 | i===6) {
-            let initInstructionCircle = blockInitTime;
-            blockInitTime = blockInitTime + 1000 * config.presentationDuration;
-            setTimeout(instructionCircle, initInstructionCircle.toString(), i);
-        }
-        
-        setTimeout(experimentalBlock, blockInitTime.toString(), i);
+
+    } else {
+
+        alert('Please, fill all Session Data before starting experiment!')
+
     }
+    
 }
 
 
@@ -186,4 +200,26 @@ function writeDesign() {
     outData.moodOnset = window.moodOnset;
 
     fs.writeFileSync('outData.json', JSON.stringify(outData, null, 2), 'utf8');
+}
+
+
+/*function readSessionData() {
+    let sessionText = fs.readFileSync('session-data.txt', { encoding: 'utf8', flag: 'r' });
+    let sessionData = JSON.parse(sessionText);
+    return sessionData
+}*/
+
+
+function checkSessionData(sessionData) {
+    let complete = true;
+    if (!('gameOrder' in sessionData)) {
+        complete = false;
+    }
+    if (!('participantID' in sessionData)) {
+        complete = false;
+    }
+    if (!('gameName' in sessionData)) {
+        complete = false;
+    }
+    return complete
 }

@@ -9,7 +9,6 @@ emojisShadow[3] = "0px 0px 9px 9px #9d6b00";
 emojisShadow[4] = "0px 0px 9px 9px #009900";
 
 window.onload = function() {
-
     document.addEventListener("keydown", changeAnswer);
 }
 

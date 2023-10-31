@@ -1,12 +1,11 @@
 const theButton = document.getElementsByClassName("button");
+const textEntry = document.getElementsByTagName('input');
+
 
 window.onload = function() {
-    for (let i = 0; i < theButton.length; i++) {
-        theButton[i].addEventListener("mouseover",mouseoverStyle);
-        theButton[i].addEventListener("mouseout",mouseoutStyle)
-        theButton[i].addEventListener("click",clickStyle);
-    }
-    
+    theButton[0].addEventListener("mouseover",mouseoverStyle);
+    theButton[0].addEventListener("mouseout",mouseoutStyle)
+    theButton[0].addEventListener("click",clickStyle);
 }
 
 function mouseoverStyle(event) {
@@ -22,9 +21,13 @@ function mouseoutStyle(event) {
 function clickStyle(event) {
     event.currentTarget.style.cursor = "default";
     event.currentTarget.style.transform = "translateY(2px)";
-
-    if (event.currentTarget.className.includes("button-small")) {
-        window.open('../html/dataEntryWindow.html','top=500,left=200,frame=false,nodeIntegration=no');
+    
+    let outData  = Object();
+    for (let i = 0; i < textEntry.length; i++) {
+        outData[textEntry[i].id] = textEntry[i].value;
     }
-}
+    fs.writeFileSync('sessionData.json', JSON.stringify(outData, null, 2), 'utf8');
+    window.close();
+    
 
+}

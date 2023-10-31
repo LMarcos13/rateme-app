@@ -201,9 +201,7 @@ img {
 }
 
 
-.theButton {
-    height: 50%;
-    width: 50%;
+.button {
     background: radial-gradient(#572863, #5e002f);
     border-radius: 40px;
     display: flex;
@@ -212,6 +210,16 @@ img {
     justify-content: center;
     border-style: outset;
     color: white;
+}
+
+.button-big {
+    height: 60%;
+    width: 60%;
+}
+
+.button-small {
+    height: 40%;
+    width: 40%;
 }
 
 .main-text-big {
@@ -281,4 +289,12 @@ img {
 .cross {
     width: 5%;
     aspect-ratio: 1 / 1;
+}
+
+
+input {
+    width: 80%;
+    height: 20%;
+    font-family: "Merriweather";
+    font-size: 2.2vw;
 }
