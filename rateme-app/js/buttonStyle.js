@@ -23,8 +23,8 @@ function clickStyle(event) {
     event.currentTarget.style.cursor = "default";
     event.currentTarget.style.transform = "translateY(2px)";
 
-    if (event.currentTarget.className.includes("button-small")) {
-        window.open('../html/dataEntryWindow.html','top=500,left=200,frame=false,nodeIntegration=no');
-    }
+    /*if (event.currentTarget.className.includes("button-small")) {
+        //window.open('../html/dataEntryWindow.html',"top=500,left=200,frame=false,nodeIntegration=no,nodeIntegrationInSubFrames=true");
+        createMainWindow();
+    }*/
 }
-

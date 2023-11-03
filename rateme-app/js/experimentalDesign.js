@@ -2,8 +2,6 @@ let filePath = 'config-file.txt';
 let data = fs.readFileSync(filePath, { encoding: 'utf8', flag: 'r' });
 const config = JSON.parse(data);
 
-window.sesionData = 'CACA';
-
 const blockDuration = config.trialDuration * config.numTrial;
 const extendedBlockDuration = blockDuration + config.questionDuration + config.moodQuestionDuration;
 const windowContent = document.getElementsByClassName('window');
@@ -32,14 +30,16 @@ window.onload = function () {
     var theButton = window.frames['contentWindow'].contentDocument.getElementsByClassName('button-big');
     theButton[0].onclick = initializeExperiment;
     windowContent[0].style.cursor = 'none';
+    var sessionDataButton = window.frames['contentWindow'].contentDocument.getElementsByClassName('button-small');
+    sessionDataButton[0].onclick = createDataWindow;
 }
 
 
 function initializeExperiment() {
 
-    let sessionData = readSessionData();
+    //let sessionData = readSessionData();
 
-    if (checkSessionData(sessionData)) {
+    //if (checkSessionData(sessionData)) {
 
         for (let i = 0; i < numBlock; i++) {
             window.initTime = Date.now();
@@ -62,11 +62,11 @@ function initializeExperiment() {
             setTimeout(experimentalBlock, blockInitTime.toString(), i);
         }
 
-    } else {
+   /* } else {
 
         alert('Please, fill all Session Data before starting experiment!')
 
-    }
+    }*/
     
 }
 
@@ -222,4 +222,21 @@ function checkSessionData(sessionData) {
         complete = false;
     }
     return complete
+}
+
+
+function createDataWindow() {
+    const sessionWindow = new BrowserWindow({
+        title: 'sessionData',
+        width: 1200,
+        height: 600,
+        webPreferences: {
+            contextIsolation: true,
+            nodeIntegration: true,
+            preload: '../../preload.js'
+        }
+    });
+
+    sessionWindow.webContents.openDevTools();
+    sessionWindow.loadFile('../html/dataEntryWindow.html');
 }

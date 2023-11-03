@@ -29,5 +29,4 @@ function clickStyle(event) {
     fs.writeFileSync('sessionData.json', JSON.stringify(outData, null, 2), 'utf8');
     window.close();
     
-
 }
