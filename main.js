@@ -22,7 +22,7 @@ function createMainWindow() {
         mainWindow.webContents.openDevTools();
     }
 
-    mainWindow.loadFile(path.join(__dirname,'./rateme-app/html/mainWindow.html'));
+    mainWindow.loadFile(path.join(__dirname,'./renderer/html/mainWindow.html'));
 }
 
 app.whenReady().then(() => {

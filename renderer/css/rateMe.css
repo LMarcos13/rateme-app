@@ -107,6 +107,11 @@ img {
     width: 80%;
 }
 
+.avatarField {
+    height: 90%;
+    width: 60%;
+}
+
 
 .name {
     font-family: "PT Sans; Founders_Grotesk";

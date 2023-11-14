@@ -13,7 +13,7 @@ window.onload = function() {
 }
 
 function changeAnswer(e) {
-    if (e.key === "n") {
+    if (e.key === "y") {
         for (let i = 0; i < emojis.length; i++) {
             emojis[i].style.boxShadow = "";
             emojis[i].style.transform = "scale(1)";

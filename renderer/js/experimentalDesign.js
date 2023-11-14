@@ -17,9 +17,9 @@ for (let i = 0; i < config.botNames.length; i++) {
     blocks[i] = randomizeBlocks(config.blockQuestions.length,config.botNames[i]);
 }
 
-window.blockOnset = Array(numBlock);
-window.restOnset = Array(numBlock);
-window.moodOnset = Array(numBlock);
+window.blockOnset = Array();
+window.restOnset = Array();
+window.moodOnset = Array();
 window.moodValue = Array();
 window.currentMood = Number;
 
@@ -28,7 +28,11 @@ bodyStyle = document.getElementsByTagName('body');
 
 window.onload = function () {
     var theButton = window.frames['contentWindow'].contentDocument.getElementsByClassName('button-big');
-    theButton[0].onclick = initializeExperiment;
+    theButton[0].onclick = () => {
+        windowContent[0].style.visibility = "hidden";
+        window.ready = true;
+    }
+
     windowContent[0].style.cursor = 'none';
     var sessionDataButton = window.frames['contentWindow'].contentDocument.getElementsByClassName('button-small');
     sessionDataButton[0].onclick = createDataWindow;
@@ -43,10 +47,10 @@ function initializeExperiment() {
 
         for (let i = 0; i < numBlock; i++) {
             window.initTime = Date.now();
-            if (i===0) {
+            if (i === 0) {
+                windowContent[0].style.visibility = "visible";
                 var restInitTime = 100;
             } else {
-                window.moodValue.push(window.currentMood);
                 var restInitTime = blockInitTime  + 1000 * extendedBlockDuration;
             }
             
@@ -72,7 +76,7 @@ function initializeExperiment() {
 
 
 function instructionCircle(index) {
-    if (index<6) {
+    if (index < 6) {
         window.botNames = blocks[0].botNames;
     } else {
         window.botNames = blocks[1].botNames;
@@ -84,9 +88,14 @@ function instructionCircle(index) {
 
 function restingBlock(index) {
 
+    if (!(index === 0 || index === 5)) {
+        console.log('hola');
+        window.moodValue.push(window.currentMood);
+    }
+
     windowContent[0].src = 'restingScreen.html';
     let restTime = Date.now() / 1000;
-    window.restOnset[index] = 1000 * restTime - window.initTime;
+    window.restOnset.push(1000 * restTime - window.initTime);
     console.log(window.restOnset[index] / 1000);
 
 }
@@ -94,7 +103,7 @@ function restingBlock(index) {
 
 function experimentalBlock(index) {
 
-    if (index<6) {
+    if (index < 6) {
         var currentBlock = blocks[0];
     } else {
         var currentBlock = blocks[1];
@@ -107,7 +116,7 @@ function experimentalBlock(index) {
     blockDesign.trialDuration = config.trialDuration;
     blockDesign.question = currentBlock.questions[index];
     let blockTime = Date.now() / 1000;
-    window.blockOnset[index] = 1000 * blockTime - window.initTime;
+    window.blockOnset.push(1000 * blockTime - window.initTime);
     console.log(window.blockOnset[index] / 1000);
 
     windowContent[0].src = 'instructionQuestionScreen.html';
@@ -119,10 +128,10 @@ function experimentalBlock(index) {
 
     setTimeout(() => {
         let onsetTime = Date.now();
-        window.moodOnset[index] = (onsetTime - window.initTime);
+        window.moodOnset.push(onsetTime - window.initTime);
         windowContent[0].src = 'moodQuestionScreen.html';
 
-        if (index===0) {
+        if (index === (numBlock / 2 - 1) || index === (numBlock - 1)) {
             setTimeout(() => {
                 writeDesign();
             },
@@ -200,6 +209,11 @@ function writeDesign() {
     outData.moodOnset = window.moodOnset;
 
     fs.writeFileSync('outData.json', JSON.stringify(outData, null, 2), 'utf8');
+
+    if (window.moodValue.length === numBlock) {
+        windowContent[0].src = '';
+    } 
+
 }
 
 
