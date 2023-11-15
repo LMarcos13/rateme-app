@@ -8,7 +8,8 @@ const windowContent = document.getElementsByClassName('window');
 const container = document.getElementsByClassName('container');
 
 const numBlock = 2 * config.blockQuestions.length;
-window.botAvatars = config.images;
+
+window.botAvatars = config.avatars;
 window.blockDesign = Object();
 
 const blocks = Array(2);
@@ -207,8 +208,19 @@ function writeDesign() {
     outData.blockOnset = window.blockOnset;
     outData.restOnset = window.restOnset;
     outData.moodOnset = window.moodOnset;
+    outData.condition = blocks[0].concat(blocks[1]);
+    outData.time = window.initTime;
+    
+    outFolder = path.join('..', 'output', 'sub-' + config.ID, 'ses-1');
+    
+    if (!fs.existsSync(outFolder)) {
+        fs.mkdir(outFolder, { recursive: true }, (err) => {
+            if (err) throw err;
+        });
+    }
 
-    fs.writeFileSync('outData.json', JSON.stringify(outData, null, 2), 'utf8');
+    let outName = 'sub-' + config.ID + '_ses-1_' + config.sessionName + '.json'
+    fs.writeFileSync(path.join(outFolder,outName), JSON.stringify(outData, null, 2), 'utf8');
 
     if (window.moodValue.length === numBlock) {
         windowContent[0].src = '';
