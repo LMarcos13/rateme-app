@@ -12,6 +12,13 @@ const numBlock = 2 * config.blockQuestions.length;
 window.botAvatars = config.avatars;
 window.blockDesign = Object();
 
+let outFolder = path.join('..', 'output', 'sub-' + config.ID, 'ses-1');
+if (!fs.existsSync(outFolder)) {
+    fs.mkdir(outFolder, { recursive: true }, (err) => {
+        if (err) throw err;
+    });
+}
+
 const blocks = Array(2);
 
 for (let i = 0; i < config.botNames.length; i++) {
@@ -90,7 +97,6 @@ function instructionCircle(index) {
 function restingBlock(index) {
 
     if (!(index === 0 || index === 5)) {
-        console.log('hola');
         window.moodValue.push(window.currentMood);
     }
 
@@ -118,7 +124,7 @@ function experimentalBlock(index) {
     blockDesign.question = currentBlock.questions[index];
     let blockTime = Date.now() / 1000;
     window.blockOnset.push(1000 * blockTime - window.initTime);
-    console.log(window.blockOnset[index] / 1000);
+    console.log(window.blockOnset[index] / 1000); //Al enseñarlo está mal por el index, pero el dato se almacena bien
 
     windowContent[0].src = 'instructionQuestionScreen.html';
 
@@ -208,16 +214,8 @@ function writeDesign() {
     outData.blockOnset = window.blockOnset;
     outData.restOnset = window.restOnset;
     outData.moodOnset = window.moodOnset;
-    outData.condition = blocks[0].concat(blocks[1]);
+    outData.condition = blocks[0].group.concat(blocks[1].group);
     outData.time = window.initTime;
-    
-    outFolder = path.join('..', 'output', 'sub-' + config.ID, 'ses-1');
-    
-    if (!fs.existsSync(outFolder)) {
-        fs.mkdir(outFolder, { recursive: true }, (err) => {
-            if (err) throw err;
-        });
-    }
 
     let outName = 'sub-' + config.ID + '_ses-1_' + config.sessionName + '.json'
     fs.writeFileSync(path.join(outFolder,outName), JSON.stringify(outData, null, 2), 'utf8');
