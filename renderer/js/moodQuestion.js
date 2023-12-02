@@ -13,17 +13,29 @@ window.onload = function() {
 }
 
 function changeAnswer(e) {
-    if (e.key === "y") {
+    if (e.key === "y" || e.key === "b") {
         for (let i = 0; i < emojis.length; i++) {
             emojis[i].style.boxShadow = "";
             emojis[i].style.transform = "scale(1)";
         }
 
-        selectedAnswer = selectedAnswer + 1;
+        if (e.key === "y") {
 
-        if (!(selectedAnswer < 5 && selectedAnswer >= 0)) {
-            selectedAnswer = 0;
+            selectedAnswer = selectedAnswer + 1;
+            if (!(selectedAnswer < 5 && selectedAnswer >= 0)) {
+                selectedAnswer = 0;
+            }
+            
+        } else {
+
+            selectedAnswer = selectedAnswer - 1;
+            if (!(selectedAnswer < 5 && selectedAnswer >= 0)) {
+                selectedAnswer = 5;
+            }
+            
         }
+
+        
 
         emojis[selectedAnswer].style.boxShadow = emojisShadow[selectedAnswer];
         emojis[selectedAnswer].style.transform = "scale(1.2)";

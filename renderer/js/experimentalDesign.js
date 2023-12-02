@@ -37,8 +37,12 @@ bodyStyle = document.getElementsByTagName('body');
 window.onload = function () {
     var theButton = window.frames['contentWindow'].contentDocument.getElementsByClassName('button-big');
     theButton[0].onclick = () => {
-        windowContent[0].style.visibility = "hidden";
+        //windowContent[0].style.visibility = "hidden";
         window.ready = true;
+
+        window.blockDesign.question = "Empezando nueva partida . . .";
+        windowContent[0].src = 'instructionQuestionScreen.html';
+
     }
 
     windowContent[0].style.cursor = 'none';
@@ -56,15 +60,15 @@ function initializeExperiment() {
         for (let i = 0; i < numBlock; i++) {
             window.initTime = Date.now();
             if (i === 0) {
-                windowContent[0].style.visibility = "visible";
-                var restInitTime = 100;
+                //windowContent[0].style.visibility = "visible";
+                var blockInitTime = 100;
             } else {
                 var restInitTime = blockInitTime  + 1000 * extendedBlockDuration;
+                setTimeout(restingBlock, restInitTime.toString(), i);
+                var blockInitTime = 1000 * config.restDuration + restInitTime;
             }
             
-            setTimeout(restingBlock, restInitTime.toString(), i);
             
-            var blockInitTime = 1000 * config.restDuration + restInitTime;
             if (i===0 | i===6) {
                 let initInstructionCircle = blockInitTime;
                 blockInitTime = blockInitTime + 1000 * config.presentationDuration;
@@ -145,8 +149,7 @@ function experimentalBlock(index) {
             config.moodQuestionDuration);
         }
 
-    }, 
-    (config.questionDuration + blockDuration) * 1000);
+    }, (config.questionDuration + blockDuration) * 1000);
 
 }
 
@@ -221,7 +224,8 @@ function writeDesign() {
     fs.writeFileSync(path.join(outFolder,outName), JSON.stringify(outData, null, 2), 'utf8');
 
     if (window.moodValue.length === numBlock) {
-        windowContent[0].src = '';
+        window.blockDesign.question = "Fin de la tarea, gracias por tu colaboración";
+        windowContent[0].src = 'instructionQuestionScreen.html';
     } 
 
 }

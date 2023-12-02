@@ -1,13 +1,5 @@
 const theButton = document.getElementsByClassName("button");
 
-document.addEventListener("keydown", (event) => {
-    if (event.key === 't') {
-        console.log(window.parent.ready);
-        if (window.parent.ready === true) {
-            window.parent.initializeExperiment();
-        }
-    }
-});
 
 window.onload = function() {
     for (let i = 0; i < theButton.length; i++) {

@@ -1,14 +1,17 @@
 const path = require('path');
 const { app, BrowserWindow } = require('electron');
 
+//process.env.NODE_ENV = 'production';
+
 const isMac = process.platform === 'darwin';
 const isDev = process.env.NODE_ENV !== 'production';
 
 function createMainWindow() {
     const mainWindow = new BrowserWindow({
         title: 'RateMe',
-        width: isDev ? 2800 : 1400,
-        height: 900,
+        //width: isDev ? 2800 : 1400,
+        //height: 100,
+        fullscreen: true,
         webPreferences: {
             contextIsolation: true,
             nodeIntegration: true,
@@ -30,7 +33,8 @@ app.whenReady().then(() => {
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
-            createMainWindow()
+            createMainWindow();
+            win.maximize();
         }
     })
 })
