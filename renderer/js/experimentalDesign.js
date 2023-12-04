@@ -9,7 +9,7 @@ const container = document.getElementsByClassName('container');
 
 const numBlock = 2 * config.blockQuestions.length;
 
-window.botAvatars = config.avatars;
+//window.botAvatars = config.avatars;
 window.blockDesign = Object();
 
 let outFolder = path.join('..', 'output', 'sub-' + config.ID, 'ses-1');
@@ -89,8 +89,10 @@ function initializeExperiment() {
 
 function instructionCircle(index) {
     if (index < 6) {
+        window.botAvatars = config.avatars[0];
         window.botNames = blocks[0].botNames;
     } else {
+        window.botAvatars = config.avatars[1];
         window.botNames = blocks[1].botNames;
     }
     window.botNames.push(config.playerName);
@@ -158,10 +160,16 @@ function randomizeBlocks(nBlock,botNames) {
 
     var tempBlock = Object();
     var questions = config.blockQuestions;
-    var direction = Array(nBlock / 2).fill('clockWise');
-    direction = direction.concat(Array(nBlock / 2).fill('counterClockWise'));
-    var group = Array(nBlock / 2).fill('inclusion');
-    group = group.concat(Array(nBlock / 2).fill('exclusion'));
+    if (nBlock > 1) {
+        var direction = Array(nBlock / 2).fill('clockWise');
+        direction = direction.concat(Array(nBlock / 2).fill('counterClockWise'));
+        var group = Array(nBlock / 2).fill('inclusion');
+        group = group.concat(Array(nBlock / 2).fill('exclusion'));
+    } else {
+        var direction = ['clockWise'];
+        var group = ['inclusion'];
+    }
+    
 
     let currentIndex = questions.length,  randomIndex;
     while (currentIndex > 0) {
