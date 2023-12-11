@@ -1,0 +1,19 @@
+{
+  "numTrial":5,
+  "trialDuration":2,
+  "restDuration":4,
+  "questionDuration":2.5,
+  "presentationDuration":0,
+  "moodQuestionDuration":2,
+  "playerName":"Daniela2",
+  "botNames":[["Emma","Marie","Joost","Elisabetta","Greta"],["Lina","Antoine","Niels","Cosima","Ada"]],
+  "avatars":[["belgium.png","france.png","netherlands.png","italy.png","germany.png","spain.png"],["belgium.png","france.png","netherlands.png","italy.png","germany.png","spain.png"]],
+  "blockQuestions":["¿Te gustaría visitar este país?",
+	"¿Te gustaría vivir una temporada en este país?",
+	"¿Crees que la gente de este país es eficiente?",
+	"¿Mimimimimiimiiimii?",
+	"¿Crees que la gente de este país es amable?"],
+  "sessionName":"rateme-political",
+  "sessionOrder":1,
+  "ID":101
+}

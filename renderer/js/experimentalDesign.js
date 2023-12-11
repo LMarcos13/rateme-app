@@ -8,6 +8,7 @@ const windowContent = document.getElementsByClassName('window');
 const container = document.getElementsByClassName('container');
 
 const numBlock = 2 * config.blockQuestions.length;
+let moreExc = 1;
 
 //window.botAvatars = config.avatars;
 window.blockDesign = Object();
@@ -69,7 +70,7 @@ function initializeExperiment() {
             }
             
             
-            if (i===0 | i===6) {
+            if (i === 0 | i === (numBlock / 2)) {
                 let initInstructionCircle = blockInitTime;
                 blockInitTime = blockInitTime + 1000 * config.presentationDuration;
                 setTimeout(instructionCircle, initInstructionCircle.toString(), i);
@@ -88,7 +89,7 @@ function initializeExperiment() {
 
 
 function instructionCircle(index) {
-    if (index < 6) {
+    if (index < (numBlock / 2)) {
         window.botAvatars = config.avatars[0];
         window.botNames = blocks[0].botNames;
     } else {
@@ -102,7 +103,7 @@ function instructionCircle(index) {
 
 function restingBlock(index) {
 
-    if (!(index === 0 || index === 5)) {
+    if (!(index === 0 || index === ((numBlock / 2) - 1))) {
         window.moodValue.push(window.currentMood);
     }
 
@@ -116,11 +117,11 @@ function restingBlock(index) {
 
 function experimentalBlock(index) {
 
-    if (index < 6) {
+    if (index < (numBlock / 2)) {
         var currentBlock = blocks[0];
     } else {
         var currentBlock = blocks[1];
-        index = index - 6;
+        index = index - (numBlock / 2);
     }
 
     blockDesign.group = currentBlock.group[index];
@@ -161,10 +162,21 @@ function randomizeBlocks(nBlock,botNames) {
     var tempBlock = Object();
     var questions = config.blockQuestions;
     if (nBlock > 1) {
-        var direction = Array(nBlock / 2).fill('clockWise');
-        direction = direction.concat(Array(nBlock / 2).fill('counterClockWise'));
-        var group = Array(nBlock / 2).fill('inclusion');
-        group = group.concat(Array(nBlock / 2).fill('exclusion'));
+
+        if (nBlock % 2 === 0) {
+            var direction = Array(nBlock / 2).fill('clockWise');
+            direction = direction.concat(Array(nBlock / 2).fill('counterClockWise'));
+            var group = Array(nBlock / 2).fill('inclusion');
+            group = group.concat(Array(nBlock / 2).fill('exclusion'));
+        } else {
+            var direction = Array((nBlock + moreExc) / 2).fill('clockWise');
+            direction = direction.concat(Array((nBlock - moreExc) / 2).fill('counterClockWise'));
+            var group = Array((nBlock - moreExc) / 2).fill('inclusion');
+            group = group.concat(Array((nBlock + moreExc) / 2).fill('exclusion'));
+            moreExc = -1;
+        }
+
+        
     } else {
         var direction = ['clockWise'];
         var group = ['inclusion'];
