@@ -1,5 +1,6 @@
 const emojis = document.getElementsByClassName('emoji-container');
 let selectedAnswer = Number;
+let clicks = 0;
 
 let emojisShadow = Array(5);
 emojisShadow[0] = "0px 0px 9px 9px #8B0000";
@@ -30,15 +31,15 @@ function changeAnswer(e) {
 
             selectedAnswer = selectedAnswer - 1;
             if (!(selectedAnswer < 5 && selectedAnswer >= 0)) {
-                selectedAnswer = 5;
+                selectedAnswer = 4;
             }
             
         }
 
-        
-
         emojis[selectedAnswer].style.boxShadow = emojisShadow[selectedAnswer];
         emojis[selectedAnswer].style.transform = "scale(1.2)";
         window.parent.currentMood = selectedAnswer;
+        clicks = clicks + 1;
+        window.parent.currentClicks = clicks;
     }
 }

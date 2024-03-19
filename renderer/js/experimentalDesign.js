@@ -30,7 +30,9 @@ window.blockOnset = Array();
 window.restOnset = Array();
 window.moodOnset = Array();
 window.moodValue = Array();
+window.clickCounter = Array();
 window.currentMood = Number;
+window.currentClicks = Number;
 
 bodyStyle = document.getElementsByTagName('body');
 
@@ -105,6 +107,9 @@ function restingBlock(index) {
 
     if (!(index === 0 || index === ((numBlock / 2) - 1))) {
         window.moodValue.push(window.currentMood);
+        window.clickCounter.push(window.currentClicks);
+        window.currentMood = Number;
+        window.currentClicks = Number;
     }
 
     windowContent[0].src = 'restingScreen.html';
@@ -233,11 +238,17 @@ function writeDesign() {
     let outData = Object();
 
     window.moodValue.push(window.currentMood);
+    window.clickCounter.push(window.currentClicks);
+    window.currentMood = Number;
+    window.currentClicks = Number;
+
     outData.moodValue = window.moodValue;
+    outData.clickCounter = window.clickCounter;
     outData.blockOnset = window.blockOnset;
     outData.restOnset = window.restOnset;
     outData.moodOnset = window.moodOnset;
     outData.condition = blocks[0].group.concat(blocks[1].group);
+    outData.question = blocks[0].questions.concat(blocks[1].questions);
     outData.time = window.initTime;
 
     let outName = 'sub-' + config.ID + '_ses-1_' + config.sessionName + '.json'
