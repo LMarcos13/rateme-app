@@ -15,5 +15,5 @@
 	"¿Esta persona es amable?"],
   "sessionName": "rateme-personal",
   "sessionOrder": 1,
-  "ID": 101
+  "ID": "101"
 }
